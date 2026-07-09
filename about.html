@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskSpace - About Me</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 width=%22100%22 height=%22100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%236366f1%22/><text y=%2270%22 x=%2220%22 fill=%22white%22 font-family=%22sans-serif%22 font-size=%2260%22 font-weight=%22bold%22>K</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-link">Kanban</a>
+        <a href="todo.html" class="nav-link">To Do</a>
+        <a href="about.html" class="nav-link active">About Me</a>
+    </nav>
+
+    <div class="todo-wrapper" style="max-width: 750px; line-height: 1.6;">
+        <header class="todo-header">
+            <h2>About Me</h2>
+        </header>
+
+        <div style="margin-bottom: 2rem;">
+            <p style="margin-bottom: 1.25rem; color: var(--text-main);">
+                Hi, I'm a technology enthusiast currently exploring the intersection of artificial intelligence, virtualization, and workflow optimization.
+            </p>
+            <p style="margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.95rem;">
+                Driven by a practical approach to productivity, I built <strong>TaskSpace</strong> as an exercise in designing streamlined management tools. I enjoy experimenting with different organizational methodologies—balancing structured Kanban boards for milestone tracking with lightweight, customizable checklists for day-to-day operations.
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+                Beyond front-end design, my interests extend into home-lab administration and infrastructure. I enjoy tinkering with self-hosted setups, managing resource allocations, and configuring hypervisors like Proxmox to deploy tailored utilities. Whether it's refactoring web interfaces or optimizing system hardware, I am always focused on finding efficient, practical solutions to everyday technical challenges.
+            </p>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <button id="nuke-all-data-btn" class="btn-nuke">Clear All Application Data (Reset Everything)</button>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

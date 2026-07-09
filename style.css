@@ -1,0 +1,649 @@
+:root {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-card: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent: #6366f1;
+    --accent-hover: #4f46e5;
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --border-radius: 12px;
+    --transition-speed: 0.2s;
+    
+    /* Kanban Import Style Accents */
+    --kanban-imported-bg: #1e1b4b; 
+    --kanban-imported-border: #4338ca;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: background-color 200ms ease, border-color 200ms ease, opacity 200ms ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem 2rem 2rem;
+}
+
+/* Global Navigation Top Bar */
+.nav-bar {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--bg-secondary);
+    padding-bottom: 0.75rem;
+}
+
+.nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--accent);
+}
+
+/* App Header styling */
+.app-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.app-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, #6366f1, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.app-header p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+/* Kanban Container Layout mapping */
+.kanban-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    align-items: start;
+}
+
+.kanban-column {
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.column-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.task-count {
+    background-color: var(--bg-card);
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.task-list {
+    min-height: 150px;
+    overflow-y: auto;
+    flex-grow: 1;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+}
+
+.task-list.drag-over {
+    background-color: rgba(99, 102, 241, 0.05);
+    outline: 2px dashed var(--accent);
+}
+
+.task-card {
+    background-color: var(--bg-card);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    cursor: grab;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.task-card:active { cursor: grabbing; }
+.task-card.dragging { opacity: 0.5; transform: scale(0.98); }
+
+.task-card h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    padding-right: 1.5rem;
+}
+
+.task-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* Custom Highlight Comment Style Row */
+.task-comment, .todo-item-comment {
+    font-size: 0.8rem;
+    color: #a855f7;
+    margin-top: 0.35rem;
+    font-style: italic;
+    font-weight: 500;
+    display: block;
+}
+
+.delete-task-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.delete-task-btn:hover { color: var(--danger); }
+
+.add-task-btn {
+    background: none;
+    border: 1px dashed var(--text-muted);
+    color: var(--text-muted);
+    padding: 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    width: 100%;
+}
+
+.add-task-btn:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+/* Project Selection UI Controls styling */
+.project-selector-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.project-selector-container label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.project-dropdown {
+    background-color: var(--bg-secondary);
+    color: var(--text-main);
+    border: 1px solid var(--bg-card);
+    padding: 0.5rem 2rem 0.5rem 1rem;
+    font-size: 0.95rem;
+    font-family: inherit;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1.2em;
+}
+
+.project-dropdown.hide { display: none; }
+
+.btn-project-action {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-project-action:hover { background-color: var(--accent); }
+.btn-project-delete:hover { background-color: var(--danger); }
+
+.btn-clear {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--bg-card);
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.btn-clear:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+/* Modals Overlay Form styling */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal {
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    width: 100%;
+    max-width: 450px;
+}
+
+.modal h3 { margin-bottom: 1.5rem; }
+.form-group { margin-bottom: 1.25rem; }
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--bg-card);
+    border-radius: 6px;
+    color: white;
+    font-family: inherit;
+    resize: vertical;
+}
+
+/* Modal Actions Utility Row Configuration */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.btn { padding: 0.6rem 1.2rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; font-size: 0.9rem; font-family: inherit; }
+.btn-secondary { background-color: var(--bg-card); color: var(--text-main); }
+.btn-primary { background-color: var(--accent); color: white; }
+.btn-danger { background-color: var(--danger); color: white; font-weight: 600; margin-right: auto; }
+
+.btn-primary:hover { background-color: var(--accent-hover); }
+.btn-danger:hover { background-color: var(--danger-hover); }
+
+.btn.hide, .btn-danger.hide { display: none; }
+
+/* Minimalist To Do Workspace Styling */
+.todo-wrapper {
+    max-width: 650px;
+    width: 100%;
+    margin: 2rem auto;
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--bg-card);
+    padding-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.import-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.toggle-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+/* Accordion Component Layout Styles */
+.accordion-container {
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--bg-card);
+    border-radius: 8px;
+    background-color: var(--bg-primary);
+    overflow: hidden;
+}
+
+.accordion-trigger {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 0.85rem 1.25rem;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-trigger:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.accordion-icon {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.accordion-panel {
+    padding: 1rem;
+    border-top: 1px solid var(--bg-card);
+}
+
+.accordion-panel.hide {
+    display: none;
+}
+
+.todo-input-container {
+    display: flex;
+    gap: 0.75rem;
+    align-items: stretch;
+}
+
+.todo-input-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-grow: 1;
+}
+
+#custom-todo-input, #custom-todo-desc, #custom-todo-comment {
+    width: 100%;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--bg-card);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    color: white;
+    font-family: inherit;
+    outline: none;
+}
+
+#custom-todo-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    resize: vertical;
+}
+
+#custom-todo-input:focus, #custom-todo-desc:focus, #custom-todo-comment:focus { border-color: var(--accent); }
+
+.btn-add-todo {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    padding: 0 1.25rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-add-todo:hover {
+    background-color: var(--accent-hover);
+}
+
+.todo-list-view {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-card);
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    gap: 0.75rem;
+    cursor: grab;
+    user-select: none;
+}
+
+.todo-item:active {
+    cursor: grabbing;
+}
+
+/* Kanban Unified Batch Group Container Wrapper */
+.kanban-group-card {
+    background-color: rgba(30, 27, 75, 0.4);
+    border: 2px dashed var(--kanban-imported-border);
+    padding: 1rem;
+    border-radius: 10px;
+    list-style: none;
+    cursor: grab;
+}
+.kanban-group-card:active {
+    cursor: grabbing;
+}
+.kanban-group-card.dragging {
+    opacity: 0.4;
+    border-style: dotted;
+}
+.kanban-group-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    user-select: none;
+}
+.kanban-sub-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Drag Sorting State Feedback */
+.todo-item.dragging {
+    opacity: 0.4;
+    transform: scale(0.98);
+    border: 1px dashed var(--accent);
+    background-color: rgba(99, 102, 241, 0.05);
+}
+.todo-item.dragging-sub {
+    opacity: 0.5;
+    border: 1px dashed var(--accent);
+}
+
+.todo-item-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.todo-item-text {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+.todo-item-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+}
+
+.todo-item.kanban-imported {
+    background-color: var(--kanban-imported-bg);
+    border: 1px solid var(--kanban-imported-border);
+}
+
+.kanban-group-card .badge {
+    font-size: 0.7rem;
+    background-color: var(--accent);
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+    color: white;
+}
+
+.todo-item-checkbox {
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 4px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.btn-edit-todo {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-left: auto;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.btn-edit-todo:hover {
+    color: var(--accent);
+}
+
+.todo-item.completed .todo-item-text,
+.todo-item.completed .todo-item-desc {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+/* Allow completed comments to strike through lighter */
+.todo-item.completed .todo-item-comment {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+.todo-item.completed {
+    opacity: 0.6;
+}
+
+.todo-action-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.btn-clear-todo {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: underline;
+}
+.btn-clear-todo:hover { color: var(--accent); }
+.btn-clear-todo.btn-danger-link:hover { color: var(--danger); }
+
+.app-footer {
+    margin-top: auto;
+    padding-top: 4rem;
+    text-align: center;
+    width: 100%;
+}
+
+.btn-nuke {
+    background: transparent;
+    border: none;
+    color: rgba(239, 68, 68, 0.35); 
+    font-size: 0.75rem;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.btn-nuke:hover {
+    color: var(--danger);
+}
+
+@media (max-width: 768px) {
+    body { padding: 1rem 0.5rem; overflow-x: hidden; }
+    .app-header h1 { font-size: 2rem; }
+    .project-selector-container { flex-wrap: wrap; gap: 0.5rem; padding: 0 1rem; }
+    .project-dropdown { width: 100%; text-align: center; }
+    .btn-project-action, .btn-clear { flex-grow: 1; font-size: 0.8rem; }
+    
+    .kanban-container {
+        display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+        padding: 1rem 0.5rem 2rem 0.5rem; gap: 1rem;
+    }
+    .kanban-column { flex: 0 0 85vw; scroll-snap-align: center; max-height: 70vh; }
+    .todo-wrapper { padding: 1rem; margin: 1rem auto; }
+    .todo-input-container { flex-direction: column; }
+    .btn-add-todo { padding: 0.75rem; width: 100%; }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskSpace - To Do List</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 width=%22100%22 height=%22100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%236366f1%22/><text y=%2270%22 x=%2220%22 fill=%22white%22 font-family=%22sans-serif%22 font-size=%2260%22 font-weight=%22bold%22>K</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-link">Kanban</a>
+        <a href="todo.html" class="nav-link active">To Do</a>
+	<a href="about.html" class="nav-link">About Me</a>
+    </nav>
+
+    <div class="todo-wrapper">
+        <header class="todo-header">
+            <h2>My Space</h2>
+            
+            <div class="import-controls">
+                <div class="toggle-container">
+                    <input type="checkbox" id="toggle-kanban" class="toggle-input">
+                    <label for="toggle-kanban" class="toggle-label">Import Kanban Tasks</label>
+                </div>
+                <select id="project-select" class="project-dropdown hide"></select>
+            </div>
+        </header>
+
+        <div class="accordion-container">
+            <button type="button" id="toggle-form-accordion" class="accordion-trigger">
+                <span>+ Add Custom Task</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div id="accordion-content" class="accordion-panel hide">
+                <form id="custom-todo-form" class="todo-input-container">
+                    <div class="todo-input-fields">
+                        <input type="text" id="custom-todo-input" required placeholder="What needs to be done?">
+                        <textarea id="custom-todo-desc" rows="2" placeholder="Add optional task descriptions..."></textarea>
+                        <input type="text" id="custom-todo-comment" placeholder="Add optional note comment...">
+                    </div>
+                    <button type="submit" class="btn-add-todo">Create</button>
+                </form>
+            </div>
+        </div>
+
+        <ul id="master-todo-list" class="todo-list-view"></ul>
+
+        <div class="todo-action-footer">
+            <button id="clear-completed-btn" class="btn-clear-todo">Clear Completed Custom Tasks</button>
+            <button id="clear-all-todo-btn" class="btn-clear-todo btn-danger-link">Clear All Custom Tasks</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="todo-edit-modal">
+        <div class="modal">
+            <h3>Edit Task Details</h3>
+            <form id="todo-edit-form">
+                <input type="hidden" id="edit-item-id">
+                <input type="hidden" id="edit-item-type"> 
+                
+                <div class="form-group">
+                    <label for="edit-item-title">Title</label>
+                    <input type="text" id="edit-item-title" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-item-desc">Description</label>
+                    <textarea id="edit-item-desc" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-item-comment">Comment</label>
+                    <input type="text" id="edit-item-comment">
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" id="todo-edit-delete-btn" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" id="todo-edit-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <button id="nuke-all-data-btn" class="btn-nuke">Clear All Application Data (Reset Everything)</button>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskSpace - Kanban Board</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 width=%22100%22 height=%22100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%236366f1%22/><text y=%2270%22 x=%2220%22 fill=%22white%22 font-family=%22sans-serif%22 font-size=%2260%22 font-weight=%22bold%22>K</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-link active">Kanban</a>
+        <a href="todo.html" class="nav-link">To Do</a>
+	<a href="about.html" class="nav-link">About Me</a>
+    </nav>
+
+    <header class="app-header">
+        <h1>TaskSpace</h1>
+        <p>Streamline your workflow beautifully.</p>
+        
+        <div class="project-selector-container">
+            <label for="project-select">Project:</label>
+            <select id="project-select" class="project-dropdown"></select>
+            <button id="add-project-btn" class="btn-project-action">+ New Project</button>
+            <button id="delete-project-btn" class="btn-project-action btn-project-delete">Delete Project</button>
+        </div>
+
+        <button id="clear-board-btn" class="btn-clear">Clear All Boards</button>
+    </header>
+
+    <main class="kanban-container">
+        <div class="kanban-column" data-status="todo">
+            <div class="column-header">
+                <h2>To Do</h2>
+                <span class="task-count">0</span>
+            </div>
+            <div class="task-list" id="todo-list"></div>
+            <button class="add-task-btn">+ Add Task</button>
+        </div>
+
+        <div class="kanban-column" data-status="inprogress">
+            <div class="column-header">
+                <h2>In Progress</h2>
+                <span class="task-count">0</span>
+            </div>
+            <div class="task-list" id="inprogress-list"></div>
+            <button class="add-task-btn">+ Add Task</button>
+        </div>
+
+        <div class="kanban-column" data-status="done">
+            <div class="column-header">
+                <h2>Done</h2>
+                <span class="task-count">0</span>
+            </div>
+            <div class="task-list" id="done-list"></div>
+            <button class="add-task-btn">+ Add Task</button>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="task-modal">
+        <div class="modal">
+            <h3 id="modal-headline">Create New Task</h3>
+            <form id="task-form">
+                <input type="hidden" id="task-id">
+                <input type="hidden" id="task-column-status">
+                
+                <div class="form-group">
+                    <label for="task-title">Title</label>
+                    <input type="text" id="task-title" required placeholder="What needs to be done?">
+                </div>
+                
+                <div class="form-group">
+                    <label for="task-desc">Description</label>
+                    <textarea id="task-desc" rows="3" placeholder="Add details..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="task-comment">Comment</label>
+                    <input type="text" id="task-comment" placeholder="Add an extra highlight note...">
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" id="modal-delete-task-btn" class="btn btn-danger hide">Delete</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <button id="nuke-all-data-btn" class="btn-nuke">Clear All Application Data (Reset Everything)</button>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
